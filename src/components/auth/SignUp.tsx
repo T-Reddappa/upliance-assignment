@@ -34,9 +34,8 @@ const SignUp = () => {
     }
     setPasswordError("");
     const result = await dispatch(signUp(formData));
-    if (signUp.fulfilled.match(result)) {
-      navigate("/dashboard");
-    }
+
+    navigate("/");
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,11 +46,14 @@ const SignUp = () => {
   };
 
   return (
-    <Container maxWidth="sm">
-      <Paper sx={{ p: 4, mt: 8 }}>
-        <Typography variant="h4" align="center" gutterBottom>
-          Sign Up
-        </Typography>
+    <div>
+      <div
+        className="w-[40%] m-auto  p-10  text-center   bg-green-50  rounded-lg shadow-xl"
+        // style={{
+        //   background: "var(--primary-color)",
+        // }}
+      >
+        <p className="text-2xl font-bold text-center">SignUp</p>
         {error && (
           <Alert severity="error" sx={{ mb: 2 }}>
             {error}
@@ -62,14 +64,16 @@ const SignUp = () => {
             {passwordError}
           </Alert>
         )}
-        <Box component="form" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <TextField
             fullWidth
             label="Name"
             name="name"
             value={formData.name}
             onChange={handleChange}
+            size="small"
             margin="normal"
+            color="secondary"
             required
           />
           <TextField
@@ -77,9 +81,11 @@ const SignUp = () => {
             label="Email"
             name="email"
             type="email"
+            size="small"
             value={formData.email}
             onChange={handleChange}
             margin="normal"
+            color="secondary"
             required
           />
           <TextField
@@ -89,6 +95,8 @@ const SignUp = () => {
             type="password"
             value={formData.password}
             onChange={handleChange}
+            size="small"
+            color="secondary"
             margin="normal"
             required
           />
@@ -97,6 +105,8 @@ const SignUp = () => {
             label="Confirm Password"
             name="confirmPassword"
             type="password"
+            size="small"
+            color="secondary"
             value={formData.confirmPassword}
             onChange={handleChange}
             margin="normal"
@@ -104,8 +114,8 @@ const SignUp = () => {
           />
           <Button
             type="submit"
-            fullWidth
             variant="contained"
+            color="secondary"
             sx={{ mt: 3 }}
             disabled={isLoading}
           >
@@ -116,9 +126,9 @@ const SignUp = () => {
               Already have an account? <Link to="/signin">Sign In</Link>
             </Typography>
           </Box>
-        </Box>
-      </Paper>
-    </Container>
+        </form>
+      </div>
+    </div>
   );
 };
 

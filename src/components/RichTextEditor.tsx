@@ -2,28 +2,23 @@ import React, { useEffect } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
-import {
-  Container,
-  Paper,
-  Box,
-  ToggleButton,
-  ToggleButtonGroup,
-  Typography,
-} from "@mui/material";
+import { Paper, Box, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import FormatBoldIcon from "@mui/icons-material/FormatBold";
 import FormatItalicIcon from "@mui/icons-material/FormatItalic";
 import FormatUnderlinedIcon from "@mui/icons-material/FormatUnderlined";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
-import { saveUser } from "../features/userSlice";
 
 const TextEditor = () => {
   const userData = useSelector((state: RootState) => state.userData.userInfo);
-  const dispatch = useDispatch();
-  console.log(userData, "editor");
+  const editorContent = useSelector((state: RootState) => state.editor.content);
 
-  const initialContent = `
+  const dispatch = useDispatch();
+
+  const initialContent = editorContent
+    ? editorContent
+    : `
   <div class="user-data">
     <h3>User Information</h3>
     <p><strong>Name:</strong> ${userData.name}</p>
@@ -32,10 +27,10 @@ const TextEditor = () => {
     <p><strong>Address:</strong> ${userData.address}</p>
   </div>
 `;
-  console.log(initialContent);
 
   const onUpdate = ({ editor }: { editor: any }) => {
     const html = editor.getHTML();
+    localStorage.setItem("editorContent", html);
     console.log(html);
   };
 
@@ -85,11 +80,17 @@ const TextEditor = () => {
   ];
 
   return (
-    <div className=" border-gray-800 rounded-md shadow-xl">
-      <Paper sx={{ p: 2 }}>
-        <Typography variant="h6" gutterBottom>
-          Rich Text Editor
-        </Typography>
+    <div
+      className=" border-gray-800 rounded-md shadow-xl"
+      style={{ background: "var(--primary-color)" }}
+    >
+      <Paper sx={{ p: 2 }} style={{ background: "var(--primary-color)" }}>
+        <h2
+          className="text-3xl font-semibold"
+          style={{ color: "var(--primary-text-color)" }}
+        >
+          Text Editor
+        </h2>
 
         <Box sx={{ borderBottom: 1, borderColor: "divider", mb: 2 }}>
           <ToggleButtonGroup

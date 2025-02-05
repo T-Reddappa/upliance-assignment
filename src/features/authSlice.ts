@@ -1,49 +1,30 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { act } from "react";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  AUTH_TOKEN_KEY,
+  AuthState,
+  clearAuthData,
+  generateMockToken,
+  mockAuthDelay,
+  saveAuthData,
+  USER_DATA_KEY,
+} from "../utils/types";
+import { Email } from "@mui/icons-material";
 
-export interface User {
-  id: string;
-  email: string;
-  name: string;
-}
-
-export interface AuthState {
-  user: User | null;
-  token: string | null;
-  isAuthenticated: boolean;
-  isLoading: boolean;
-  error: string | null;
-}
-
-const AUTH_TOKEN_KEY = "auth_token";
-const USER_DATA_KEY = "user_data";
-
+// Mock user database
 const mockUsers = [
   {
     id: "1",
+    email: "test@test.com",
+    password: "password123",
+    name: "Test User",
+  },
+  {
+    id: "2",
     email: "upliance@gmail.com",
     password: "password123",
-    name: "upliance",
+    name: "Upliance",
   },
 ];
-
-const mockAuthDelay = () => {
-  return new Promise((resolve) => setTimeout(resolve, 1500));
-};
-
-const saveAuthData = (user: any, token: string) => {
-  localStorage.setItem(AUTH_TOKEN_KEY, token);
-  localStorage.setItem(USER_DATA_KEY, JSON.stringify(user));
-};
-
-const clearAuthData = () => {
-  localStorage.removeItem(AUTH_TOKEN_KEY);
-  localStorage.removeItem(USER_DATA_KEY);
-};
-
-const generateMockToken = (userId: string) => {
-  return `mock-token-${userId}-${Date.now()}`;
-};
 
 export const signIn = createAsyncThunk(
   "auth/signIn",
@@ -54,10 +35,11 @@ export const signIn = createAsyncThunk(
     try {
       await mockAuthDelay();
       const user = mockUsers.find(
-        (user) => user.email === email && user.password === password
+        (u) => u.email === email && u.password === password
       );
+
       if (!user) {
-        throw new Error("Invalid Credentials");
+        throw new Error("Invalid credentials");
       }
       const { password: _, ...userWithoutPassword } = user;
       const token = generateMockToken(user.id);
@@ -81,11 +63,10 @@ export const signUp = createAsyncThunk(
   ) => {
     try {
       await mockAuthDelay();
-      const existingUser = mockUsers.find((user) => user.email === email);
+      const existingUser = mockUsers.find((u) => u.email === email);
       if (existingUser) {
         throw new Error("Email already exists");
       }
-
       const newUser = {
         id: String(mockUsers.length + 1),
         email,
@@ -103,16 +84,19 @@ export const signUp = createAsyncThunk(
   }
 );
 
+// New thunk to initialize auth state from localStorage
 export const initializeAuth = createAsyncThunk(
   "auth/initialize",
   async (_, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem(AUTH_TOKEN_KEY);
       const userData = localStorage.getItem(USER_DATA_KEY);
+      console.log(token, userData);
 
       if (!token || !userData) {
         throw new Error("No auth data found");
       }
+
       return {
         user: JSON.parse(userData),
         token,
@@ -148,6 +132,7 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // Sign In cases
       .addCase(signIn.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -162,6 +147,7 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload as string;
       })
+      // Sign Up cases
       .addCase(signUp.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -174,9 +160,9 @@ const authSlice = createSlice({
       })
       .addCase(signUp.rejected, (state, action) => {
         state.isLoading = false;
-
         state.error = action.payload as string;
       })
+      // Initialize auth cases
       .addCase(initializeAuth.pending, (state) => {
         state.isLoading = true;
       })

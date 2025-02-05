@@ -65,7 +65,6 @@ const UserForm = () => {
     const userData = {
       id: userId,
       ...formData,
-      createdAt: new Date().toISOString(),
     };
 
     dispatch(saveUser(userData));
@@ -98,11 +97,15 @@ const UserForm = () => {
     <div
       className="w-[50%] border shadow-xl rounded-md p-4 bg-white
     "
+      style={{ background: "var(--primary-color)" }}
     >
       <Box sx={{ mt: 4, mb: 4 }}>
-        <Typography variant="h4" component="h1" gutterBottom>
+        <h2
+          className="text-3xl font-semibold"
+          style={{ color: "var(--primary-text-color)" }}
+        >
           User Form
-        </Typography>
+        </h2>
 
         <form onSubmit={handleSubmit}>
           <TextField
@@ -112,6 +115,7 @@ const UserForm = () => {
             label="Name"
             name="name"
             size="small"
+            color="secondary"
             value={formData.name}
             onChange={handleChange}
           />
@@ -123,6 +127,7 @@ const UserForm = () => {
             name="email"
             type="email"
             size="small"
+            color="secondary"
             value={formData.email}
             onChange={handleChange}
           />
@@ -130,10 +135,12 @@ const UserForm = () => {
           <TextField
             fullWidth
             required
+            type="number"
             margin="normal"
             label="Phone"
             size="small"
             name="phone"
+            color="secondary"
             value={formData.phone}
             onChange={handleChange}
           />
@@ -146,6 +153,7 @@ const UserForm = () => {
             name="address"
             size="small"
             multiline
+            color="secondary"
             rows={3}
             value={formData.address}
             onChange={handleChange}
@@ -154,7 +162,7 @@ const UserForm = () => {
           <Button
             type="submit"
             variant="contained"
-            color="primary"
+            color="secondary"
             fullWidth
             sx={{ mt: 3 }}
           >
