@@ -11,13 +11,13 @@ A modern React application showcasing state management with Redux Toolkit,Routin
 - Material-UI components
 
 ## Tech Stack
--React
--Redux Toolkit
--React Router
--TypeScript
--Material-UI
--Local Storage
--React Chart.js
+- React
+- Redux Toolkit
+- React Router
+- TypeScript
+- Material-UI
+- Local Storage
+- React Chart.js
 
 
 
