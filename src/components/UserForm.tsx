@@ -96,7 +96,7 @@ const UserForm = () => {
 
   return (
     <div
-      className="w-[50%] border shadow-xl rounded-md p-8 bg-white
+      className="w-[50%] border shadow-xl rounded-md p-4 bg-white
     "
     >
       <Box sx={{ mt: 4, mb: 4 }}>

@@ -5,6 +5,8 @@ import UserForm from "./components/UserForm";
 import TextEditor from "./components/RichTextEditor";
 import { useSelector } from "react-redux";
 import { RootState } from "./store";
+import SignIn from "./components/auth/SignIn";
+import SignUp from "./components/auth/SignUp";
 
 function App() {
   const count = useSelector((state: RootState) => state.counter.count);
@@ -22,6 +24,8 @@ function App() {
         transition: "background-color 0.5s ease-out",
       }}
     >
+      <SignIn />
+      <SignUp />
       <div className=" grid grid-cols-2 gap-2">
         <Counter />
         <TextEditor />

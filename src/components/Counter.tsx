@@ -11,11 +11,14 @@ const Counter = () => {
 
   const backgroundColor = useMemo(() => {
     const hue = Math.min(count * 10, 360);
-    return `hsl(${hue}, 70%, 80%)`;
+    return `hsl(60%, ${hue}, 80%)`;
   }, [count]);
 
   return (
-    <div className=" p-8 rounded-md shadow-xl">
+    <div
+      className=" p-4 rounded-md shadow-xl"
+      style={{ backgroundColor, transition: "background-color 0.5s ease-out" }}
+    >
       <h2 className="text-3xl">Counter</h2>
       <div className=" flex flex-col gap-3 items-center justify-center">
         <p className="font-bold text-xl ">{count}</p>
