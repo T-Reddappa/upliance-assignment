@@ -5,7 +5,7 @@ interface EditorStore {
 }
 
 const initialState: EditorStore = {
-  content: localStorage.getItem("editorContent") || "",
+  content: localStorage.getItem(`editorContent`) || "",
 };
 
 const editorSlice = createSlice({

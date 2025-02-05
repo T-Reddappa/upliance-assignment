@@ -2,7 +2,6 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import { Navigate } from "react-router-dom";
-import SignIn from "./auth/SignIn";
 
 interface PrivateRouteProps {
   children: React.ReactElement;

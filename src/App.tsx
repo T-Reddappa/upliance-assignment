@@ -6,7 +6,6 @@ import SignIn from "./components/auth/SignIn";
 import SignUp from "./components/auth/SignUp";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Home from "./pages/Home";
-import Dashbaord from "./pages/Dashboard";
 
 import Navbar from "./components/Navbar";
 import PrivateRoute from "./components/PrivateRoute";
@@ -14,7 +13,6 @@ import { initializeAuth } from "./features/authSlice";
 import Dashboard from "./pages/Dashboard";
 
 function App() {
-  const count = useSelector((state: RootState) => state.counter.count);
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
@@ -22,7 +20,7 @@ function App() {
   useEffect(() => {
     dispatch(initializeAuth()).then((result) => {
       if (initializeAuth.fulfilled.match(result)) {
-        navigate("/"); // ✅ Navigate only after successful authentication
+        navigate("/");
       }
     });
   }, [dispatch]);

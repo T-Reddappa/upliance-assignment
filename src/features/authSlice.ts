@@ -8,7 +8,6 @@ import {
   saveAuthData,
   USER_DATA_KEY,
 } from "../utils/types";
-import { Email } from "@mui/icons-material";
 
 // Mock user database
 const mockUsers = [

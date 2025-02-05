@@ -14,8 +14,6 @@ const TextEditor = () => {
   const userData = useSelector((state: RootState) => state.userData.userInfo);
   const editorContent = useSelector((state: RootState) => state.editor.content);
 
-  const dispatch = useDispatch();
-
   const initialContent = editorContent
     ? editorContent
     : `
@@ -30,7 +28,7 @@ const TextEditor = () => {
 
   const onUpdate = ({ editor }: { editor: any }) => {
     const html = editor.getHTML();
-    localStorage.setItem("editorContent", html);
+    localStorage.setItem(`${userData.id}editorContent`, html);
     console.log(html);
   };
 

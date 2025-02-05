@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 
@@ -8,14 +8,6 @@ import { decrement, increment, reset } from "../features/counterSlice";
 const Counter = () => {
   const count = useSelector((state: RootState) => state.counter.count);
   const dispatch = useDispatch();
-
-  const backgroundColor = useMemo(() => {
-    const hue = Math.min(count * 10, 360);
-    const startColor = `hsl(${hue}, 100%, 70%)`;
-    const endColor = `hsl(${(hue + 120) % 360}, 100%, 70%)`; // Adding 120 for a contrasting color
-
-    return `linear-gradient(to right, ${startColor}, ${endColor})`;
-  }, [count]);
 
   return (
     <div
