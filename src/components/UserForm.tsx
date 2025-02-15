@@ -49,11 +49,20 @@ const UserForm = () => {
   // Handle form changes
   const handleChange = (e: any) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
+    const updatedForm = {
+      ...formData,
       [name]: value,
-    }));
-    setHasUnsavedChanges(true);
+    };
+
+    setFormData(updatedForm);
+    const isFormUnchanged =
+      JSON.stringify(updatedForm) === JSON.stringify(initialFormState);
+
+    // setFormData((prev) => ({
+    //   ...prev,
+    //   [name]: value,
+    // }));
+    setHasUnsavedChanges(!isFormUnchanged);
   };
 
   // Handle form submission

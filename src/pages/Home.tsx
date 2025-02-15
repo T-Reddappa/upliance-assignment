@@ -9,7 +9,7 @@ const Home = () => {
 
   return (
     <div style={{ backgroundColor }} className="p-10 w-full">
-      <div className="grid grid-cols-2 gap-3 mb-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3 ">
         <Counter />
         <TextEditor />
       </div>
